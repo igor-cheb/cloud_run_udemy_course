@@ -1,0 +1,12 @@
+scripts:
+  runserver: uvicorn src.main:app --reload
+  test: pytest src/tests.py
+  build: docker build .
+  installs: pip install -r requirements.txt
+  push: 
+    - docker build --platform=linux/amd64 -t serverless-py-amd64 .
+    - docker tag serverless-py-amd64 us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py:latest
+    - docker push us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py
+  configure: 
+    - gcloud auth configure-docker us-central1-docker.pkg.dev
+    - gcloud artifacts repositories create serverless-py-repo --repository-format=docker --location=us-central1
