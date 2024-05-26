@@ -1,0 +1,26 @@
+name: Test, Build and Push to Google Cloud run
+on: 
+    workflow_dispatch:
+    push:
+        branches:
+        - main
+    pull_request:
+        branches:
+        - main
+        - master
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: Set up Python 3.8
+              uses: actions/setup-python@v4
+              with:
+                python-version: 3.8
+            - name: Install requirements
+              run: pip install -r requirements.txt
+            - name: Run tests
+              run: pytest src/tests.py
+    deploy:
+        runs-on: ubuntu-latest
