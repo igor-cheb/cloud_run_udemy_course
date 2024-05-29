@@ -1,6 +1,6 @@
 name: Test, Build and Push to Google Cloud run
 on: 
-    workflow_dispatch:
+    workflow_dispatch: # this means that the workflow can be triggered manually
     push:
         branches:
         - main
@@ -19,8 +19,18 @@ jobs:
               with:
                 python-version: 3.8
             - name: Install requirements
-              run: pip install -r requirements.txt
+              run: pip install -r requirements.txt 
             - name: Run tests
               run: pytest src/tests.py
-    # deploy:
-    #     runs-on: ubuntu-latest
+    build_deploy:
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+        - name: Set up QUEMU
+          uses: docker/setup-qemu-action@v2
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+        - name: Build container image
+          run: docker build -t serveless-py .
