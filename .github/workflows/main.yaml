@@ -49,4 +49,4 @@ jobs:
               --allow-unauthenticated \
               --region=us-central1 \
               --project=essential-haiku-419611
-              --port=1234
+              --port=8080:1234
