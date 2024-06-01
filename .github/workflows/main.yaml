@@ -48,5 +48,5 @@ jobs:
               --image=us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py:latest \
               --allow-unauthenticated \
               --region=us-central1 \
-              --project=essential-haiku-419611
-              --port=8080:1234
+              --project=essential-haiku-419611 \
+              --port=1234
