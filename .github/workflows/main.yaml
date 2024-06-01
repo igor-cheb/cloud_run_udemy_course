@@ -32,9 +32,13 @@ jobs:
           uses: docker/setup-qemu-action@v2
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v1
+        - name: Login to Google Cloud
+          uses: google-github-actions/auth@v1
+          with:
+            credentials_json: ${{secrets.GOOGLE_CREDENTIALS}}
         - name: Build container image
           run: |
-            docker build -t serveless-py .
             docker build --platform=linux/amd64 -t serverless-py-amd64 .
             docker tag serverless-py-amd64 us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py:latest
+            gcloud auth configure-docker us-central1-docker.pkg.dev
             docker push us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py
