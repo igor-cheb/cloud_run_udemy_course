@@ -39,7 +39,7 @@ jobs:
             credentials_json: ${{secrets.GOOGLE_CREDENTIALS}}
         - name: Build container image
           run: |
-            docker build --platform=linux/amd64 -t serverless-py-amd64 .
-            docker tag serverless-py-amd64 us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py:latest
+            docker build --platform=linux/amd64 -t serverless-py .
+            docker tag serverless-py us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py:latest
             gcloud auth configure-docker us-central1-docker.pkg.dev
             docker push us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py
