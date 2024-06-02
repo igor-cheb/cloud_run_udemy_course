@@ -1,6 +1,7 @@
 scripts:
   runserver: uvicorn src.main:app --reload
   test: pytest src/tests.py
+  update_secrets: gcloud secrets versions add py_env_file --data-file=.env
   build: docker build .
   installs: pip install -r requirements.txt
   push: 
@@ -10,3 +11,5 @@ scripts:
   configure: 
     - gcloud auth configure-docker us-central1-docker.pkg.dev
     - gcloud artifacts repositories create serverless-py-repo --repository-format=docker --location=us-central1
+  deploy:
+    - gcloud run deploy serverless-py-run --image=us-central1-docker.pkg.dev/essential-haiku-419611/serverless-py-repo/serverless-py:latest --platform=managed --region=us-central1
